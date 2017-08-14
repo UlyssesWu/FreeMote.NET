@@ -4,7 +4,7 @@ FreeMote.NET (formerly known as `Emote.NET`) is a .NET wrapper for Emote engine 
 
 It's a part of [FreeMote SDK](https://github.com/Project-AZUSA/FreeMote-SDK), and is designed to be used with Pure PSB for free/research projects.
 
-Download Libs from Release page.
+Download Libs from Release page. (You can also use FreeMote `Windows DX9` lib to compile & use `FreeMote.NET`.)
 
 ## Demos
 
@@ -16,7 +16,7 @@ A demo using FreeMote.NET with [SharpDX](https://github.com/sharpdx/SharpDX).
 
 ![NekoConsole](https://github.com/Project-AZUSA/FreeMote.NET/raw/master/EmoteNetSample/DEMO.gif)
 
-Warning: FreeMote.NET can not open any commercial PSB models, and we won't provide any commercial models, either. It only works with **Pure** PSB.
+**Warning** : FreeMote.NET can not open any commercial PSB models, and we won't provide any commercial models, either. It only works with [**Pure** PSB](https://github.com/Project-AZUSA/FreeMote-SDK#generate-pure-psb).
 
 ### FreeMoteViewer
 
