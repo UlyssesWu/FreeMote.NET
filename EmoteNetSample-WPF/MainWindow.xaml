@@ -1,0 +1,15 @@
+﻿<Window x:Class="FreeMote.Tools.Viewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Project AZUSA © FreeMote Viewer"
+        Width="1280"
+        Height="720"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource NekoHacksScene}"
+        >
+    <Grid>
+        <Label Name="CenterMark" Content="+" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="Gold" />
+        <TextBlock Name="CharaCenterMark"  HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Foreground="Red" Margin="0" Width="25" Height="28" Text="+" TextAlignment="Center"  />
+    </Grid>
+
+</Window>

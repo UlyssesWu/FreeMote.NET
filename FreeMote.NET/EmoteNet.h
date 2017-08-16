@@ -177,7 +177,7 @@ namespace FreeMote {
 		{
 			sPlayer->SetCoord(x, y, frameCount, easing);
 		}
-		void GetCoord(float% x, float% y)
+		void GetCoord([OutAttribute]float% x, [OutAttribute]float% y)
 		{
 			float tx = 0, ty = 0;
 			sPlayer->GetCoord(tx, ty);
@@ -268,7 +268,7 @@ namespace FreeMote {
 		{
 			sPlayer->SetOuterForce(StringToCharPtr(label), ofx, ofy, frameCount, easing);
 		}
-		void GetOuterForce(String^ label, float% ofx, float% ofy)
+		void GetOuterForce(String^ label, [OutAttribute]float% ofx, [OutAttribute]float% ofy)
 		{
 			float _ofx, _ofy;
 			sPlayer->GetOuterForce(StringToCharPtr(label), _ofx, _ofy);
