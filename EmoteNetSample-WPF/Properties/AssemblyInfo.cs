@@ -7,12 +7,12 @@ using System.Windows;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Emote.NET WPF Sample")]
-[assembly: AssemblyDescription("Emote.NET Sample for WPF by Ulysses.")]
+[assembly: AssemblyTitle("FreeMote Viewer")]
+[assembly: AssemblyDescription("View PSB models.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Project AZUSA")]
-[assembly: AssemblyProduct("EmoteNetSample")]
-[assembly: AssemblyCopyright("Copyright © Project AZUSA 2015")]
+[assembly: AssemblyProduct("FreeMote")]
+[assembly: AssemblyCopyright("Copyright © Project AZUSA 2015-2017")]
 [assembly: AssemblyTrademark("wdwxy12345@gmail.com")]
 [assembly: AssemblyCulture("")]
 

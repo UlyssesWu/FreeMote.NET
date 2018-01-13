@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using FreeMote;
@@ -60,11 +61,17 @@ namespace NekoHacks
             _e.EmoteInit();
             _e.Device.TextureFilter = GrayTextureFilter;
 
-
-            _player = _e.CreatePlayer("Chara1", "emote_test.pure.psb");
-            _e.Device.UseTextureFilter = true; //turn on texture filter!
+            if (File.Exists(args[0]))
+            {
+                _player = _e.CreatePlayer("Chara1", args[0]);
+            }
+            else
+            {
+                _player = _e.CreatePlayer("Chara1", "emote_test.pure.psb");
+            }
+            _e.Device.UseTextureFilter = false; //turn on texture filter!
             //e.Device.SetMaskRegionClipping(true); //Set this to true will increase CPU usage but decrease GPU usage.
-            _player2 = _e.CreatePlayer("Chara2", "chocola-pure.psb");
+            //_player2 = _e.CreatePlayer("Chara2", "chocola-pure.psb");
 
             //I don't know how to use this method. I guess this method may combine two models (only if they are complementary).
             //virtual void  CreatePlayer (emote_uint32_t emoteObjectNum, const emote_uint8_t **emoteObjectImage, const emote_uint32_t *emoteObjectSize, class IEmotePlayer **player)=0 
@@ -99,23 +106,23 @@ namespace NekoHacks
             //    }
             //}
 
-            _player2.SetScale(0.4f, 0, 0);
-            _player2.SetCoord(-100, 50, 0, 0);
-            _player2.SetSmoothing(true);
+            //_player2.SetScale(0.4f, 0, 0);
+            //_player2.SetCoord(-100, 50, 0, 0);
+            //_player2.SetSmoothing(true);
 
-            _player2.SetVariables(faceTable, 2000f, 1f); //-Why are you so angry? -Why am I monochrome?
+            //_player2.SetVariables(faceTable, 2000f, 1f); //-Why are you so angry? -Why am I monochrome?
 
-            _player.PlayTimeline("変な動き", TimelinePlayFlags.TIMELINE_PLAY_PARALLEL);
-            _player2.PlayTimeline("差分用_waiting_loop", TimelinePlayFlags.TIMELINE_PLAY_PARALLEL);
+            //_player.PlayTimeline("変な動き", TimelinePlayFlags.TIMELINE_PLAY_PARALLEL);
+            //_player2.PlayTimeline("差分用_waiting_loop", TimelinePlayFlags.TIMELINE_PLAY_PARALLEL);
             //ctrlform.TopMost = true;
             Thread th = new Thread(() =>
             {
-                var ctrlform2 = new FormConsole(_player2, "Chara2");
-                ctrlform2.Closed +=
-                    (sender, eventArgs) =>
-                    {
-                        _e.DeletePlayer(_player2); //Try to close this form, the memory will be released
-                    };
+                //var ctrlform2 = new FormConsole(_player2, "Chara2");
+                //ctrlform2.Closed +=
+                //    (sender, eventArgs) =>
+                //    {
+                //        _e.DeletePlayer(_player2); //Try to close this form, the memory will be released
+                //    };
                 //ctrlform2.Show();
                 var ctrlform = new FormConsole(_player, "Chara1");
                 //ctrlform.Show();
@@ -229,7 +236,7 @@ namespace NekoHacks
             int[] margins = { 0, 0, form.Width, form.Height };
 
             // Extend aero glass style to whole form
-            Util.DwmExtendFrameIntoClientArea(form.Handle, ref margins);
+            //Util.DwmExtendFrameIntoClientArea(form.Handle, ref margins);
 
         }
 

@@ -130,8 +130,15 @@ namespace NekoHacks
             for (uint i = 0; i < count; i++)
             {
                 Console.WriteLine(_emote.GetVariableLabelAt(i));
+                Dictionary<string, int> preset = new Dictionary<string, int>();
+                var frameCount = _emote.CountVariableFrameAt(i);
+                for (uint j = 0; j < frameCount; j++)
+                {
+                    preset.Add(_emote.GetVariableFrameLabelAt(i, j),
+                        ConvertToInt(_emote.GetVariableFrameValueAt(i, j)));
+                }
                 ArgTrackBar temp = new ArgTrackBar(_emote.GetVariableLabelAt(i),
-                    ConvertToInt(_emote.GetVariable(_emote.GetVariableLabelAt(i))),-4097, 4097);
+                    ConvertToInt(_emote.GetVariable(_emote.GetVariableLabelAt(i))),-4097, 4097, preset);
                 temp.OnValueChanged += SetVariable;
                 _argTracks.TryAdd(_emote.GetVariableLabelAt(i), temp);
             }
