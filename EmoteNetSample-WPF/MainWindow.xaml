@@ -10,6 +10,11 @@
     <Grid>
         <Label Name="CenterMark" Content="+" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="Gold" />
         <TextBlock Name="CharaCenterMark"  HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Foreground="Red" Margin="0" Width="25" Height="28" Text="+" TextAlignment="Center"  />
+        
+        <StackPanel Name="MotionPanel" CanVerticallyScroll="True" HorizontalAlignment="Right" Orientation="Vertical">
+            <Button Width="100" HorizontalAlignment="Right" Content="Motion" Margin="0,10,5,5" Background="Transparent" Foreground="Green" BorderThickness="3" BorderBrush="DarkGreen" Click="GetTimelines"></Button>
+            <Button Width="100" HorizontalAlignment="Right" Content="Stop" Margin="0,10,5,5" Background="Transparent" Foreground="Green" BorderThickness="3" BorderBrush="DarkGreen" Click="Stop"></Button>
+        </StackPanel>
     </Grid>
 
 </Window>

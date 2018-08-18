@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -371,6 +372,59 @@ namespace FreeMote.Tools.Viewer
                 // unlock the D3DImage
                 _di.Unlock();
             }
+        }
+
+        private void GetTimelines(object sender, RoutedEventArgs e)
+        {
+            var count = _player.CountMainTimelines();
+            for (uint i = 0; i < count; i++)
+            {
+                //Console.WriteLine(_player.GetDiffTimelineLabelAt(i));
+                Button btn = new Button
+                {
+                    //Name = _player.GetDiffTimelineLabelAt(i),
+                    Content = _player.GetMainTimelineLabelAt(i),
+                    Width = 200,
+                    Tag = "main",
+                    Margin = new Thickness(0,0,5,5)
+                };
+                btn.Click += PlayTimeline;
+                MotionPanel.Children.Add(btn);
+            }
+
+            if (count > 0)
+            {
+                MotionPanel.Children.Add(new Separator());
+            }
+
+            count = _player.CountDiffTimelines();
+            for (uint i = 0; i < count; i++)
+            {
+                //Console.WriteLine(_player.GetDiffTimelineLabelAt(i));
+                Button btn = new Button
+                {
+                    //Name = _player.GetDiffTimelineLabelAt(i),
+                    Content = _player.GetDiffTimelineLabelAt(i),
+                    Width = 200,
+                    Tag = "diff",
+                    Margin = new Thickness(0, 0, 5, 5)
+                };
+                btn.Click += PlayTimeline;
+                MotionPanel.Children.Add(btn);
+            }
+        }
+
+        private void PlayTimeline(object sender, RoutedEventArgs e)
+        {
+            _player.PlayTimeline(((Button) sender).Content.ToString(),
+                ((Button) sender).Tag.ToString() == "diff"
+                    ? TimelinePlayFlags.TIMELINE_PLAY_DIFFERENCE
+                    : TimelinePlayFlags.NONE);
+        }
+
+        private void Stop(object sender, RoutedEventArgs e)
+        {
+            _player.Skip();
         }
     }
 }
