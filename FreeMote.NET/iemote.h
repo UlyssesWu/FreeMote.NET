@@ -152,6 +152,11 @@ public:
   virtual void SetGrayscale(float rate, float frameCount = 0, float easing = 0) = 0;
   virtual float GetGrayscale(void) const = 0;
 
+  virtual void SetAsOriginalScale(bool state) = 0;
+  virtual bool IsAsOriginalScale(void) const = 0;
+
+  virtual float GetState(const char *label) = 0;
+
   virtual emote_uint32_t CountVariables(void) const = 0;
   virtual const char *GetVariableLabelAt(emote_uint32_t variableIndex) const = 0;
   virtual emote_uint32_t CountVariableFrameAt(emote_uint32_t variableIndex) const = 0;
@@ -169,7 +174,7 @@ public:
 
   virtual void StartWind(float start, float goal, float speed, float powMin, float powMax) = 0;
   virtual void StopWind(void) = 0;
-  
+
   virtual emote_uint32_t CountMainTimelines(void) const = 0;
   virtual const char *GetMainTimelineLabelAt(emote_uint32_t index) const = 0;
   virtual emote_uint32_t CountDiffTimelines(void) const = 0;
@@ -190,6 +195,7 @@ public:
   virtual bool IsAnimating(void) const = 0;
   virtual void Skip(void) = 0;
   virtual void Pass(void) = 0;
+  virtual void Step(void) = 0;
   virtual void Progress(float frameCount) = 0;
   virtual bool IsModified(void) const = 0;
   virtual void Render(void) = 0;

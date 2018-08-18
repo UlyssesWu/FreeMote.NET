@@ -184,7 +184,7 @@ namespace FreeMote.Tools.Viewer
 
         void MainWindow_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed && e.GetPosition(MotionPanel).X < 0)
             {
                 var ex = e.GetPosition(this);
                 _player.OffsetCoord((int)(ex.X - _lastX), (int)(ex.Y - _lastY));
@@ -376,6 +376,18 @@ namespace FreeMote.Tools.Viewer
 
         private void GetTimelines(object sender, RoutedEventArgs e)
         {
+            if (MotionPanel.Children.Count > 0)
+            {
+                if (MotionPanel.Visibility == Visibility.Visible)
+                {
+                    MotionPanel.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    MotionPanel.Visibility = Visibility.Visible;
+                }
+                return;
+            }
             var count = _player.CountMainTimelines();
             for (uint i = 0; i < count; i++)
             {
@@ -384,9 +396,11 @@ namespace FreeMote.Tools.Viewer
                 {
                     //Name = _player.GetDiffTimelineLabelAt(i),
                     Content = _player.GetMainTimelineLabelAt(i),
-                    Width = 200,
+                    Width = 180,
                     Tag = "main",
-                    Margin = new Thickness(0,0,5,5)
+                    Margin = new Thickness(0,0,5,5),
+                    Background = Brushes.Transparent,
+                    Foreground = Brushes.DarkOrange,
                 };
                 btn.Click += PlayTimeline;
                 MotionPanel.Children.Add(btn);
@@ -405,9 +419,11 @@ namespace FreeMote.Tools.Viewer
                 {
                     //Name = _player.GetDiffTimelineLabelAt(i),
                     Content = _player.GetDiffTimelineLabelAt(i),
-                    Width = 200,
+                    Width = 180,
                     Tag = "diff",
-                    Margin = new Thickness(0, 0, 5, 5)
+                    Margin = new Thickness(0, 0, 5, 5),
+                    Background = Brushes.Transparent,
+                    Foreground = Brushes.DarkOrange,
                 };
                 btn.Click += PlayTimeline;
                 MotionPanel.Children.Add(btn);
@@ -424,7 +440,18 @@ namespace FreeMote.Tools.Viewer
 
         private void Stop(object sender, RoutedEventArgs e)
         {
+            _player.StopTimeline("");
             _player.Skip();
+            _player.SetVariable("fade_z", 256);
+        }
+
+        private void Clear(object sender, RoutedEventArgs e)
+        {
+            for (uint i = 0; i < _player.CountVariables(); i++)
+            {
+                _player.SetVariable(_player.GetVariableLabelAt(i), 0);
+            }
+            _player.SetVariable("fade_z", 256);
         }
     }
 }

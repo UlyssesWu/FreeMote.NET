@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("NekoSpritePreview")]
-[assembly: AssemblyDescription("Emote.Net Sample by Ulysses.")]
+[assembly: AssemblyTitle("NekoSpirit")]
+[assembly: AssemblyDescription("Emote.NET Sample by Ulysses.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Project AZUSA")]
-[assembly: AssemblyProduct("NekoSprite")]
-[assembly: AssemblyCopyright("Copyright © Project AZUSA 2015")]
+[assembly: AssemblyProduct("FreeMote")]
+[assembly: AssemblyCopyright("Copyright © Project AZUSA 2015-2018")]
 [assembly: AssemblyTrademark("wdwxy12345@gmail.com")]
 [assembly: AssemblyCulture("")]
 

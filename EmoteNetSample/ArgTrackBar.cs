@@ -24,7 +24,7 @@ namespace NekoHacks
         public delegate void ValueChangedHandler(object sender,TrackEventArgs eventArgs);
         public event ValueChangedHandler OnValueChanged = null;
         //public event 
-        public ArgTrackBar(string name,int value = 0,int min = 0,int max = 100)
+        public ArgTrackBar(string name,int value = 0,int min = 0,int max = 100, Dictionary<string, int> presets = null)
         {
             InitializeComponent();
             this.Name = name;
@@ -36,6 +36,31 @@ namespace NekoHacks
             if (value >= min && value <= max)
             {
                 tracker.Value = value;
+            }
+
+            if (presets == null || presets.Count <= 0)
+            {
+                this.Controls.Remove(flowPanel);
+                this.Height -= flowPanel.Height;
+            }
+            else
+            {
+                foreach (var preset in presets)
+                {
+                    if (preset.Value > tracker.Maximum)
+                    {
+                        tracker.Maximum = preset.Value;
+                    }
+                    if (preset.Value < tracker.Minimum)
+                    {
+                        tracker.Minimum = preset.Value;
+                    }
+                    var btn = new Button(){AutoSize = true, Text = preset.Key};
+                    btn.Click += (sender, args) => { SetValue(preset.Value); };
+                    flowPanel.Controls.Add(btn);
+                }
+
+                this.Height += flowPanel.Height;
             }
         }
 

@@ -16,7 +16,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute(L"")];
 [assembly:AssemblyCompanyAttribute(L"Project AZUSA")];
 [assembly:AssemblyProductAttribute(L"FreeMote")];
-[assembly:AssemblyCopyrightAttribute(L"Copyright (c) Project AZUSA 2017")];
+[assembly:AssemblyCopyrightAttribute(L"Copyright (c) Project AZUSA 2017-2018")];
 [assembly:AssemblyTrademarkAttribute(L"wdwxy12345@gmail.com")];
 [assembly:AssemblyCultureAttribute(L"")];
 
