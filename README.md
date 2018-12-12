@@ -20,7 +20,7 @@ A demo using FreeMote.NET with [SharpDX](https://github.com/sharpdx/SharpDX).
 
 ### FreeMoteViewer
 
-A demo about using FreeMote.NET in WPF.
+A demo about using FreeMote.NET in WPF. For FreeMote version, see [FreeMote](https://github.com/UlyssesWu/FreeMote#freemote-viewer-freemotetoolsviewer).
 
 ---
 

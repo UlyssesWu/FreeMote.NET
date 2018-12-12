@@ -42,6 +42,7 @@ public:
     MASK_MODE_ALPHA
   };
 
+
   typedef void* (*ObjMemAlloc)(std::size_t size);
   typedef void (*ObjMemFree)(void *ptr);
   struct ObjMemAllocator
@@ -49,6 +50,7 @@ public:
     ObjMemAlloc alloc;
     ObjMemFree free;
   };
+
 
   enum shader_model_t {
     SHADER_MODEL_NO_SHADER,
@@ -66,11 +68,14 @@ public:
     ObjMemAllocator objAllocator;
   };
 
+  virtual const IEmoteDevice::InitParam &GetInitParam(void) const = 0;
+
   virtual void SetMaskMode(mask_mode_t maskMode) = 0;
   virtual mask_mode_t GetMaskMode(void) const = 0;
 
   virtual void SetMaskRegionClipping(bool state) = 0;
   virtual bool GetMaskRegionClipping(void) const = 0;
+
 
   virtual void CreatePlayer(emote_image_ptr_t emoteObjectImage, emote_uint32_t emoteObjectSize, class IEmotePlayer **player) = 0;
   virtual void CreatePlayer(emote_uint32_t emoteObjectNum, const emote_image_ptr_t *emoteObjectImage, const emote_uint32_t *emoteObjectSize, class IEmotePlayer **player) = 0;
@@ -163,6 +168,7 @@ public:
   virtual const char *GetVariableFrameLabelAt(emote_uint32_t variableIndex, emote_uint32_t frameIndex) const = 0;
   virtual float GetVariableFrameValueAt(emote_uint32_t variableIndex, emote_uint32_t frameIndex) const = 0;
 
+  virtual void AddUserDefinedVariable(const char *label) = 0;
   virtual void SetVariable(const char *label, float value, float frameCount = 0, float easing = 0) = 0;
   virtual float GetVariable(const char *label) const = 0;
 
@@ -218,6 +224,16 @@ public:
 
   virtual void SetOuterRot(float rot, float frameCount = 0, float easing = 0) = 0;
   virtual float GetOuterRot(void) const = 0;
+
+  virtual void StartRecordAPILog(void) = 0;
+  virtual void StopRecordAPILog(void) = 0;
+  virtual bool IsRecordingAPILog(void) const = 0;
+  virtual void StartReplayAPILog(void) = 0;
+  virtual void StopReplayAPILog(void) = 0;
+  virtual bool IsReplayingAPILog(void) const = 0;
+  virtual void ClearAPILog(void) = 0;
+  virtual const char *GetAPILog(void) const = 0;
+  virtual void SetAPILog(const char *log) = 0;
 };
 
 
@@ -235,6 +251,7 @@ _EXPORT IEmoteDevice *EmoteCreate(const IEmoteDevice::InitParam &param);
 typedef void(*FP_EMOTE_FILTER_FUNC)(emote_uint8_t *image, emote_uint32_t imageSize);
 
 _EXPORT void EmoteFilterTexture(emote_uint8_t *image, emote_uint32_t imageSize, FP_EMOTE_FILTER_FUNC filterFunc);
+_EXPORT bool EmoteCheckValidObject(const emote_uint8_t *image, emote_uint32_t imageSize);
 
 
 #endif // __EMOTE_DRIVER_H

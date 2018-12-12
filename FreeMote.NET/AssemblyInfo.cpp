@@ -16,7 +16,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute(L"")];
 [assembly:AssemblyCompanyAttribute(L"Project AZUSA")];
 [assembly:AssemblyProductAttribute(L"FreeMote")];
-[assembly:AssemblyCopyrightAttribute(L"Copyright (c) Project AZUSA 2017-2018")];
+[assembly:AssemblyCopyrightAttribute(L"Copyright (c) Project AZUSA 2017-2019")];
 [assembly:AssemblyTrademarkAttribute(L"wdwxy12345@gmail.com")];
 [assembly:AssemblyCultureAttribute(L"")];
 
@@ -31,7 +31,8 @@ using namespace System::Security::Permissions;
 // 您可以指定所有值，也可以使用“修订号”和“生成号”的默认值，
 // 方法是按如下所示使用“*”: :
 
-[assembly:AssemblyVersionAttribute("1.0.*")];
+[assembly:AssemblyVersionAttribute("3.9.6.0")];
+[assembly:AssemblyFileVersionAttribute("3.9.6.0")];
 
 [assembly:ComVisible(false)];
 

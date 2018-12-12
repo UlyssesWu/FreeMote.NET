@@ -89,6 +89,11 @@ namespace FreeMote {
 			sPlayer->AddRef();
 		}
 
+		void AddUserDefinedVariable(String^ var)
+		{
+			return sPlayer->AddUserDefinedVariable(StringToCharPtr(var));
+		}
+
 		void Release()
 		{
 			sPlayer->Release();
@@ -454,6 +459,53 @@ namespace FreeMote {
 			return sPlayer->GetCharaProfile(StringToCharPtr(label));
 		}
 
+#pragma endregion
+
+#pragma region Log
+		void StartRecordAPILog()
+		{
+			sPlayer->StartRecordAPILog();
+		}
+
+		void StopRecordAPILog()
+		{
+			sPlayer->StopRecordAPILog();
+		}
+
+		bool IsRecordingAPILog()
+		{
+			return sPlayer->IsRecordingAPILog();
+		}
+		
+		void StartReplayAPILog()
+		{
+			sPlayer->StartReplayAPILog();
+		}
+
+		void StopReplayAPILog()
+		{
+			sPlayer->StopReplayAPILog();
+		}
+
+		bool IsReplayingAPILog()
+		{
+			return sPlayer->IsReplayingAPILog();
+		}
+
+		void ClearAPILog()
+		{
+			sPlayer->ClearAPILog();
+		}
+
+		String^ GetAPILog()
+		{
+			return marshalString<E_UTF8>(sPlayer->GetAPILog());
+		}
+
+		void SetAPILog(String^ log)
+		{
+			sPlayer->SetAPILog(StringToCharPtr(log));
+		}
 #pragma endregion
 
 		void SetOuterRot(float rot, [Optional]float frameCount, [Optional]float easing)
