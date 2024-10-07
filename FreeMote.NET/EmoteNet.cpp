@@ -420,7 +420,7 @@ namespace FreeMote {
 	{
 		if (formHandle != IntPtr::Zero)
 		{
-			sHwnd = (HWND)formHandle.ToInt32();
+			sHwnd = static_cast<HWND>(formHandle.ToPointer());
 		}
 
 		sScreenHeight = height;
@@ -774,10 +774,10 @@ namespace FreeMote {
 		if (!sCanvasTexture)
 			return;
 
-		float vl = -sScreenWidth / 2;
-		float vt = -sScreenHeight / 2;
-		float vr = sScreenWidth / 2;
-		float vb = sScreenHeight / 2;
+		float vl = -sScreenWidth / 2.0f;
+		float vt = -sScreenHeight / 2.0f;
+		float vr = sScreenWidth / 2.0f;
+		float vb = sScreenHeight / 2.0f;
 		float tl = 0.0f;
 		float tt = 0.0f;
 		float tr = float(sScreenWidth) / sCanvasTextureWidth;
