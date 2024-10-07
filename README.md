@@ -20,13 +20,13 @@ A demo using FreeMote.NET with [SharpDX](https://github.com/sharpdx/SharpDX).
 
 ### FreeMoteViewer
 
-A demo about using FreeMote.NET in WPF. For FreeMote version, see [FreeMote](https://github.com/UlyssesWu/FreeMote#freemote-viewer-freemotetoolsviewer).
+A demo about using FreeMote.NET in WPF. For more advanced FreeMote version, see [FreeMote](https://github.com/UlyssesWu/FreeMote#freemote-viewer-freemotetoolsviewer).
 
 ---
 
 by **Ulysses** (wdwxy12345@gmail.com) from Project AZUSA
 
-FreeMote.NET is licensed under **LGPLv3**. Members from Project AZUSA can ask for a looser license.
+FreeMote.NET is licensed under **LGPLv3**.
 
 ## Thanks
 

@@ -508,6 +508,22 @@ namespace FreeMote {
 		}
 #pragma endregion
 
+
+		UInt32 GetTransformOrderMask()
+		{
+			return sPlayer->GetTransformOrderMask();
+		}
+
+		void SetTransformOrderMask(UInt32 mask)
+		{
+			sPlayer->SetTransformOrderMask(mask);
+		}
+
+		UInt32 GetSuitableClearColor()
+		{
+			return sPlayer->GetSuitableClearColor();
+		}
+
 		void SetOuterRot(float rot, [Optional]float frameCount, [Optional]float easing)
 		{
 			sPlayer->SetOuterRot(rot, frameCount, easing);
@@ -746,6 +762,34 @@ namespace FreeMote {
 			device->OnRenderTarget((LPDIRECT3DTEXTURE9)(renderTargetTexture.ToPointer()));
 		};
 
+		void SetUseD3D9Ex(bool state)
+		{
+			device->SetUseD3D9Ex(state);
+		}
+
+		bool GetUseD3D9Ex()
+		{
+			return device->GetUseD3D9Ex();
+		}
+
+		static String^ GetBuildDateTime()
+		{
+			auto str = EmoteGetBuildDateTime();
+			return marshalString<E_UTF8>(str);			
+		}
+
+		static String^ GetSDKVersion()
+		{
+			auto str = EmoteGetSDKVersion();
+			return marshalString<E_UTF8>(str);
+		}
+
+		static bool CheckValidObject(array<Byte>^ image)
+		{
+			pin_ptr<emote_uint8_t> pinnedBytes = &image[0];
+			return EmoteCheckValidObject(pinnedBytes, image->Length);
+		}
+		
 		//MARK: How to use array types in XML doc, SEE: http://stackoverflow.com/questions/2367493/how-to-refer-to-array-types-in-documentation-comments
 		/// <summary>
 		/// 纹理预处理函数
@@ -1051,26 +1095,26 @@ namespace FreeMote {
 		/// <summary>
 		/// D3D设备指针
 		/// </summary>
-		property int D3Device;
+		property IntPtr D3Device;
 
 		/// <summary>
 		/// D3D Surface指针
 		/// </summary>
-		property int D3DSurface
+		property IntPtr D3DSurface
 		{
-			int get()
+			IntPtr get()
 			{
 				if (sSurface > 0)
 				{
-					return (int)sSurface;
+					return IntPtr(sSurface);
 				}
-				else if (sD3DDevice != nullptr)
+				if (sD3DDevice != nullptr)
 				{
 					LPDIRECT3DSURFACE9 surf;
 					sD3DDevice->GetRenderTarget(0, &surf);
-					return (int)surf;
+					return IntPtr(surf);
 				}
-				else { return 0; }
+				return IntPtr::Zero;
 			}
 		}
 
@@ -1078,7 +1122,7 @@ namespace FreeMote {
 		{
 			IntPtr get()
 			{
-				return *(gcnew IntPtr(sCanvasTexture));
+				return IntPtr(sCanvasTexture);
 			}
 			void set(IntPtr ptr)
 			{

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Project AZUSA")]
 [assembly: AssemblyProduct("FreeMote")]
-[assembly: AssemblyCopyright("Copyright © Project AZUSA 2015-2018")]
+[assembly: AssemblyCopyright("Copyright © Project AZUSA 2015-2025")]
 [assembly: AssemblyTrademark("wdwxy12345@gmail.com")]
 [assembly: AssemblyCulture("")]
 

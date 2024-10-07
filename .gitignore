@@ -288,3 +288,5 @@ __pycache__/
 *.xsd.cs
 dist
 *.dll
+/FreeMote.NET/x64/emotedriver.dll
+/FreeMote.NET/x86/emotedriver.dll

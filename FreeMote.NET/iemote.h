@@ -100,6 +100,10 @@ public:
 
   virtual void OnDeviceLost(void) = 0;
   virtual void OnRenderTarget(LPDIRECT3DTEXTURE9 renderTargetTexture) = 0;
+
+
+  virtual void SetUseD3D9Ex(bool state) = 0;
+  virtual bool GetUseD3D9Ex(void) const = 0;
 };
 
 
@@ -109,6 +113,17 @@ public:
   enum timeline_play_flags_t {
     TIMELINE_PLAY_PARALLEL   = 1 << 0,
     TIMELINE_PLAY_DIFFERENCE = 1 << 1
+  };
+
+  enum transform_order_mask_t {
+    POSITION_TRANSFORM_ORDER_MASK_TRANSLATE_TO_SCALE = 1 << 0,
+    POSITION_TRANSFORM_ORDER_MASK_SCALE_TO_TRANSLATE = 1 << 1,
+    PHYSICS_TRANSFORM_ORDER_MASK_TRANSLATE_TO_SCALE = 1 << 8,
+    PHYSICS_TRANSFORM_ORDER_MASK_SCALE_TO_TRANSLATE = 1 << 9,
+    
+    TRANSFORM_ORDER_MASK_TRANSLATE_TO_SCALE = POSITION_TRANSFORM_ORDER_MASK_TRANSLATE_TO_SCALE | PHYSICS_TRANSFORM_ORDER_MASK_TRANSLATE_TO_SCALE,
+    TRANSFORM_ORDER_MASK_SCALE_TO_TRANSLATE = POSITION_TRANSFORM_ORDER_MASK_SCALE_TO_TRANSLATE | PHYSICS_TRANSFORM_ORDER_MASK_SCALE_TO_TRANSLATE,
+    TRANSFORM_ORDER_MASK_DEFAULT = POSITION_TRANSFORM_ORDER_MASK_TRANSLATE_TO_SCALE | PHYSICS_TRANSFORM_ORDER_MASK_SCALE_TO_TRANSLATE
   };
 
   virtual ~IEmotePlayer(void) {}
@@ -132,6 +147,9 @@ public:
 
   virtual void SetQueuing(bool state) = 0;
   virtual bool GetQueuing(void) const = 0;
+
+  virtual void SetTransformOrderMask(emote_uint32_t mask) = 0;
+  virtual emote_uint32_t GetTransformOrderMask(void) const = 0;
 
   virtual void SetHairScale(float scale) = 0;
   virtual float GetHairScale(void) const = 0;
@@ -216,6 +234,7 @@ public:
   virtual emote_uint32_t GetStereovisionRenderScreen(void) const = 0;
 
 
+
   virtual bool IsCharaProfileAvailable(void) const = 0;
   virtual float GetCharaHeight(void) const = 0;
   virtual emote_uint32_t CountCharaProfiles(void) const = 0;
@@ -234,6 +253,8 @@ public:
   virtual void ClearAPILog(void) = 0;
   virtual const char *GetAPILog(void) const = 0;
   virtual void SetAPILog(const char *log) = 0;
+
+  virtual emote_uint32_t GetSuitableClearColor(void) const = 0;
 };
 
 
@@ -246,6 +267,8 @@ typedef IEmotePlayer* PEMOTEPLAYER;
 
 
 _EXPORT IEmoteDevice *EmoteCreate(const IEmoteDevice::InitParam &param);
+_EXPORT const char *EmoteGetBuildDateTime(void);
+_EXPORT const char *EmoteGetSDKVersion(void);
 
 
 typedef void(*FP_EMOTE_FILTER_FUNC)(emote_uint8_t *image, emote_uint32_t imageSize);

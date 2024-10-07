@@ -92,7 +92,7 @@ namespace NekoHacks
                 {"face_cheek", 0.0f}
             };
 
-            _device = new Device(new IntPtr(_e.D3Device));
+            _device = new Device(_e.D3Device);
             _player.SetScale(0.4f, 0, 0);
             _player.SetCoord(300, 50, 0, 0);
             _player.StartWind(0f, 1f, 0.8f, 0.5f, 0.8f);

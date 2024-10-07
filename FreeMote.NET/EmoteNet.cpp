@@ -491,10 +491,10 @@ namespace FreeMote {
 		//	&sD3DDevice);
 
 		//ADDED
-		D3Device = (int)sD3DDevice;
+		D3Device = IntPtr(sD3DDevice);
 		if (useD3DEx)
 		{
-			D3Device = (int)sD3DDeviceEx;
+			D3Device = IntPtr(sD3DDeviceEx);
 		}
 
 		if (useD3DSurface)
@@ -752,7 +752,7 @@ namespace FreeMote {
 		sD3DDevice->SetRenderTarget(0, surface);
 		surface->Release();
 		// ビューポート設定 Viewport设定
-		D3DVIEWPORT9 vp = { 0, 0, sScreenWidth, sScreenHeight, 0.0f, 1.0f };
+		D3DVIEWPORT9 vp = { 0, 0, static_cast<DWORD>(sScreenWidth), static_cast<DWORD>(sScreenHeight), 0.0f, 1.0f };
 		sD3DDevice->SetViewport(&vp);
 		sD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(255, 255, 255, 255), 1.0f, 0);
 	}
@@ -994,7 +994,7 @@ namespace FreeMote {
 
 		// E-moteプレイヤ作成
 		//ADDED:
-		IEmotePlayer *p;
+		IEmotePlayer *p = nullptr;
 		pin_ptr<IEmotePlayer*> nativePtr = &p;
 		device->CreatePlayer(buf, size, nativePtr);
 		FreeMote::EmotePlayer^ player = gcnew FreeMote::EmotePlayer(p);

@@ -7,6 +7,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -50,6 +51,7 @@ namespace FreeMote.Tools.Viewer
         private EmotePlayer _player;
         private IntPtr _scene;
         private string _psbPath;
+        private string[] _psbPaths;
         private PreciseTimer _timer;
 
         private double _deltaX, _deltaY;
@@ -67,9 +69,16 @@ namespace FreeMote.Tools.Viewer
             else
             {
                 _psbPath = args[1];
+
+                if (args.Length > 2)
+                {
+                    _psbPaths = args.Skip(1).ToArray();
+                }
             }
             if (!File.Exists(_psbPath))
             {
+                MessageBox.Show("No file input.");
+                Application.Current.Shutdown();
                 return;
             }
 
@@ -107,14 +116,21 @@ namespace FreeMote.Tools.Viewer
             _midY = Height / 2;
             CenterMark.Visibility = Visibility.Hidden;
             CharaCenterMark.Visibility = Visibility.Hidden;
-
+            
             _emote = new Emote(_helper.EnsureHandle(), (int)Width, (int)Height, true);
             _emote.EmoteInit();
 
-            _player = _emote.CreatePlayer("Chara1", _psbPath);
-            _player.SetScale(1, 0, 0);
-            _player.SetCoord(0, 0);
-            _player.SetVariable("fade_z", 256);
+            if (_psbPaths != null)
+            {
+                _player = _emote.CreatePlayer("CombinedChara1", _psbPaths);
+            }
+            else
+            {
+                _player = _emote.CreatePlayer("Chara1", _psbPath);
+            }
+            //_player.SetScale(1, 0, 0);
+            //_player.SetCoord(0, 0);
+            //_player.SetVariable("fade_z", 256);
             _player.SetSmoothing(true);
             _player.Show();
             // begin rendering the custom D3D scene into the D3DImage
@@ -298,7 +314,7 @@ namespace FreeMote.Tools.Viewer
             if (_di.IsFrontBufferAvailable)
             {
                 // create a custom D3D scene and get a pointer to its surface
-                _scene = new IntPtr(_emote.D3DSurface);
+                _scene = _emote.D3DSurface;
 
                 // set the back buffer using the new scene pointer
                 _di.Lock();
