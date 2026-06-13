@@ -688,6 +688,167 @@ namespace FreeMote {
 		//}
 	}
 
+
+	array<Byte>^ Emote::RenderToBuffer(int width, int height)
+	{
+		if (sD3DDevice == NULL)
+		{
+			throw gcnew Exception("D3D device is not initialized.");
+		}
+
+		if (width <= 0 || height <= 0)
+		{
+			throw gcnew ArgumentOutOfRangeException("width", "Width and height must be greater than zero.");
+		}
+
+		HRESULT hr = S_OK;
+		String^ error = nullptr;
+		LPDIRECT3DSURFACE9 oldTarget = NULL;
+		LPDIRECT3DSURFACE9 renderTarget = NULL;
+		LPDIRECT3DSURFACE9 systemSurface = NULL;
+		D3DVIEWPORT9 oldViewport;
+		memset(&oldViewport, 0, sizeof(oldViewport));
+		D3DLOCKED_RECT lockedRect;
+		memset(&lockedRect, 0, sizeof(lockedRect));
+		bool isLocked = false;
+		bool sceneBegun = false;
+		int oldWidth = sScreenWidth;
+		int oldHeight = sScreenHeight;
+		array<Byte>^ pixels = nullptr;
+
+		hr = sD3DDevice->GetRenderTarget(0, &oldTarget);
+		if (FAILED(hr))
+		{
+			error = "Failed to get current render target.";
+			goto Cleanup;
+		}
+
+		hr = sD3DDevice->GetViewport(&oldViewport);
+		if (FAILED(hr))
+		{
+			error = "Failed to get current viewport.";
+			goto Cleanup;
+		}
+
+		hr = sD3DDevice->CreateRenderTarget(width, height, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, 0, FALSE, &renderTarget, NULL);
+		if (FAILED(hr))
+		{
+			error = "Failed to create screenshot render target.";
+			goto Cleanup;
+		}
+
+		hr = sD3DDevice->CreateOffscreenPlainSurface(width, height, D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &systemSurface, NULL);
+		if (FAILED(hr))
+		{
+			error = "Failed to create screenshot system surface.";
+			goto Cleanup;
+		}
+
+		hr = sD3DDevice->SetRenderTarget(0, renderTarget);
+		if (FAILED(hr))
+		{
+			error = "Failed to set screenshot render target.";
+			goto Cleanup;
+		}
+
+		D3DVIEWPORT9 viewport;
+		viewport.X = 0;
+		viewport.Y = 0;
+		viewport.Width = static_cast<DWORD>(width);
+		viewport.Height = static_cast<DWORD>(height);
+		viewport.MinZ = 0.0f;
+		viewport.MaxZ = 1.0f;
+		hr = sD3DDevice->SetViewport(&viewport);
+		if (FAILED(hr))
+		{
+			error = "Failed to set screenshot viewport.";
+			goto Cleanup;
+		}
+
+		sScreenWidth = width;
+		sScreenHeight = height;
+		D3DInitRenderState();
+
+		hr = sD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+		if (FAILED(hr))
+		{
+			error = "Failed to clear screenshot render target.";
+			goto Cleanup;
+		}
+
+		hr = sD3DDevice->BeginScene();
+		if (FAILED(hr))
+		{
+			error = "Failed to begin screenshot scene.";
+			goto Cleanup;
+		}
+		sceneBegun = true;
+
+		Draw();
+
+		hr = sD3DDevice->EndScene();
+		sceneBegun = false;
+		if (FAILED(hr))
+		{
+			error = "Failed to end screenshot scene.";
+			goto Cleanup;
+		}
+
+		hr = sD3DDevice->GetRenderTargetData(renderTarget, systemSurface);
+		if (FAILED(hr))
+		{
+			error = "Failed to copy screenshot render target.";
+			goto Cleanup;
+		}
+
+		hr = systemSurface->LockRect(&lockedRect, NULL, D3DLOCK_READONLY);
+		if (FAILED(hr))
+		{
+			error = "Failed to lock screenshot surface.";
+			goto Cleanup;
+		}
+		isLocked = true;
+
+		pixels = gcnew array<Byte>(width * height * 4);
+		for (int y = 0; y < height; y++)
+		{
+			IntPtr row((BYTE*)lockedRect.pBits + y * lockedRect.Pitch);
+			Marshal::Copy(row, pixels, y * width * 4, width * 4);
+		}
+
+Cleanup:
+		if (isLocked && systemSurface != NULL)
+		{
+			systemSurface->UnlockRect();
+		}
+
+		if (sceneBegun)
+		{
+			sD3DDevice->EndScene();
+		}
+
+		if (oldTarget != NULL)
+		{
+			sD3DDevice->SetRenderTarget(0, oldTarget);
+			sD3DDevice->SetViewport(&oldViewport);
+		}
+
+		sScreenWidth = oldWidth;
+		sScreenHeight = oldHeight;
+		D3DInitRenderState();
+
+		SAFE_RELEASE(systemSurface);
+		SAFE_RELEASE(renderTarget);
+		SAFE_RELEASE(oldTarget);
+
+		if (error != nullptr)
+		{
+			throw gcnew Exception(error);
+		}
+
+		return pixels;
+	}
+
 	//------------------------------------------------
 	// メイン Main
 	//------------------------------------------------

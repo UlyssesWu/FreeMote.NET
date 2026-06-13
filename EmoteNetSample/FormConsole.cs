@@ -134,7 +134,7 @@ namespace NekoHacks
                 var frameCount = _emote.CountVariableFrameAt(i);
                 for (uint j = 0; j < frameCount; j++)
                 {
-                    preset.Add(_emote.GetVariableFrameLabelAt(i, j),
+                    preset.TryAdd(_emote.GetVariableFrameLabelAt(i, j),
                         ConvertToInt(_emote.GetVariableFrameValueAt(i, j)));
                 }
                 ArgTrackBar temp = new ArgTrackBar(_emote.GetVariableLabelAt(i),

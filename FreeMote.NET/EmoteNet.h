@@ -1002,6 +1002,11 @@ namespace FreeMote {
 		/// </summary>
 		void Draw();
 
+		/// <summary>
+		/// äÖÈ¾Í¼Ïñ£¨RGBA8£¬DPI 96£©
+		/// </summary>
+		array<Byte>^ RenderToBuffer(int width, int height);
+
 		void DrawCanvasTexture(void);
 		void AttachCanvasTexture(void);
 		void DetachCanvasTexture(void);
